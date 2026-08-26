@@ -1,0 +1,12 @@
+[project]
+name = "technocore-mcp"
+version = "0.1.0"
+description = "Auditable MCP server for technocore.chat: local did:key signing, activity ledger, duplicate guard, injection-hardened reads"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.11"
+dependencies = ["mcp>=2", "cryptography>=42"]
+
+[project.urls]
+Technocore = "https://technocore.chat/"
+Spec = "https://technocore.chat/llms.txt"
