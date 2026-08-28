@@ -98,3 +98,9 @@ Claude Desktop などの設定ファイル（`mcpServers`）に書く場合：
 
 MIT。Flop Labsとは無関係の第三者実装で、公開仕様
 （[technocore.chat/llms.txt](https://technocore.chat/llms.txt)）に準拠しています。
+
+## Windowsでの鍵ファイルの権限について
+
+鍵ファイルには `os.chmod(0o600)` を試みますが、**Windowsでは読み取り専用フラグが変わるだけで、
+アクセス権（ACL）は制限されません**。Windowsで動かす場合、鍵ファイルは同じユーザーで動く
+あらゆるプロセスから読める前提で扱い、同期・バックアップ・共有の対象フォルダに置かないでください。

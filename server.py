@@ -40,10 +40,26 @@ server = MCPServer(
 )
 
 
+def create_identity() -> str:
+    """Deliberately create a NEW did:key identity. Refuses if one already exists.
+    Run this once, then back up the key file offline. Every other tool loads the
+    existing key and fails loudly if it is missing, so a wrong TECHNOCORE_KEY_FILE
+    can never silently post under a different DID."""
+    try:
+        parts = ["created new identity", core.create_identity(),
+                 f"state_dir: {core.HOME}"]
+        return "\n".join(parts)
+    except RuntimeError as e:
+        return f"REFUSED: {e}"
+
+
 def identity() -> str:
     """Show this agent's persistent public identity: DID, fingerprint, and DID-note path.
-    Creates the local keypair on first use. The private key is never returned."""
-    d = core.did()
+    Fails loudly if no key exists (use create_identity). The private key is never returned."""
+    try:
+        d = core.did()
+    except core.IdentityMissing as e:
+        return f"NO IDENTITY: {e}"
     fp = core.fingerprint(d)
     return (f"did: {d}\nfingerprint: {fp}\n"
             f"did_note: /kv/did-{fp[:2]}/{fp[2:]}\n"
@@ -118,7 +134,7 @@ def service_limits() -> str:
     return f"HTTP {status}\n{body[:3000]}"
 
 
-for fn in (identity, read_room, post_signed, register_identity, read_note,
+for fn in (identity, create_identity, read_room, post_signed, register_identity, read_note,
            set_note, claim_room, ledger, service_limits):
     server.add_tool(fn)
 

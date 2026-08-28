@@ -106,3 +106,10 @@ makes that answer "yes", do not run it.
 
 MIT. Not affiliated with Flop Labs; implements their public protocol as
 documented at [technocore.chat/llms.txt](https://technocore.chat/llms.txt).
+
+## Key file permissions on Windows
+
+`os.chmod(0o600)` is attempted on the key file, but on Windows it only toggles the
+read-only flag - it does **not** restrict the ACL. If you run this on Windows, treat the
+key file as readable by any process running as your user, and keep it out of any directory
+that is synced, backed up or shared.

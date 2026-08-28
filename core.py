@@ -23,6 +23,7 @@ import json
 import os
 import re
 import time
+import urllib.error
 import urllib.parse
 import urllib.request
 
@@ -39,16 +40,18 @@ B58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
 
 NAME_RE = re.compile(r"^[a-z0-9][a-z0-9_-]{0,47}$")
 
-# The server replaces C0/C1 controls, zero-width/format characters and bidi
-# overrides with spaces before storing. We apply the same sweep before signing
-# so the signature covers the bytes that actually get stored.
-_SWEEP = re.compile(
-    "[\x00-\x1f\x7f-\x9f​-‏  ‪-‮⁠﻿]"
-)
+import unicodedata
+
+_SWEEP_CATS = {"Cc", "Cf", "Cs", "Co", "Zl", "Zp"}
 
 
 def sweep(text: str) -> str:
-    return _SWEEP.sub(" ", text)
+    """Server-side single-line sweep, per llms.txt (2026-08-27 revision):
+    every char in Unicode categories Cc/Cf/Cs/Co/Zl/Zp becomes a space,
+    then the ends are trimmed. Sign the result, not the raw text."""
+    return "".join(
+        " " if unicodedata.category(c) in _SWEEP_CATS else c for c in text
+    ).strip()
 
 
 def b58encode(data: bytes) -> str:
@@ -64,10 +67,30 @@ def b58encode(data: bytes) -> str:
     return out
 
 
-def load_or_create_key() -> Ed25519PrivateKey:
+class IdentityMissing(RuntimeError):
+    """Raised instead of silently minting a second identity."""
+
+
+def load_key(create: bool = False) -> Ed25519PrivateKey:
+    """Load the identity key. Never creates one unless create=True.
+
+    Silently generating a key when KEY_FILE is missing is the single most
+    dangerous failure mode of a tool like this: a typo in TECHNOCORE_KEY_FILE,
+    a different working directory or a service running as another user all
+    produce a brand-new DID, and every post afterwards succeeds with HTTP 200
+    under an identity nobody knows. The history you think you are building is
+    attributed to a stranger. So: loud failure, and creation only on request.
+    """
     if os.path.exists(KEY_FILE):
         with open(KEY_FILE, "rb") as f:
             return serialization.load_pem_private_key(f.read(), password=None)
+    if not create:
+        raise IdentityMissing(
+            f"no identity key at {KEY_FILE}. If this path is unexpected, check "
+            f"TECHNOCORE_KEY_FILE / TECHNOCORE_HOME before doing anything else - "
+            f"a wrong path here means posting as a different DID. To deliberately "
+            f"create a NEW identity, call create_identity() (MCP tool: create_identity)."
+        )
     key = Ed25519PrivateKey.generate()
     os.makedirs(os.path.dirname(KEY_FILE), exist_ok=True)
     pem = key.private_bytes(
@@ -84,8 +107,16 @@ def load_or_create_key() -> Ed25519PrivateKey:
     return key
 
 
+def create_identity() -> str:
+    """Deliberately create a NEW identity. Refuses if one already exists."""
+    if os.path.exists(KEY_FILE):
+        raise RuntimeError(f"identity already exists at {KEY_FILE}; refusing to overwrite")
+    load_key(create=True)
+    return did()
+
+
 def did() -> str:
-    pub = load_or_create_key().public_key().public_bytes(
+    pub = load_key().public_key().public_bytes(
         encoding=serialization.Encoding.Raw, format=serialization.PublicFormat.Raw
     )
     return "did:key:z" + b58encode(b"\xed\x01" + pub)
@@ -96,7 +127,7 @@ def fingerprint(d: str | None = None) -> str:
 
 
 def _sign(payload: str) -> str:
-    raw = load_or_create_key().sign(payload.encode("utf-8"))
+    raw = load_key().sign(payload.encode("utf-8"))
     return base64.urlsafe_b64encode(raw).decode().rstrip("=")
 
 
@@ -120,6 +151,24 @@ def _get(url: str) -> tuple[int, str]:
             return r.status, r.read().decode("utf-8", "replace")
     except urllib.error.HTTPError as e:
         return e.code, e.read().decode("utf-8", "replace")
+    except urllib.error.URLError as e:
+        return 0, f"network error: {e.reason}"
+
+
+def _post(url: str, payload: dict) -> tuple[int, str]:
+    """POST lane: raises the size ceiling, not the line count (see llms.txt)."""
+    body = json.dumps(payload).encode("utf-8")
+    req = urllib.request.Request(
+        url, data=body, method="POST",
+        headers={"User-Agent": "technocore-mcp/0.1",
+                 "Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            return r.status, r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        return e.code, e.read().decode("utf-8", "replace")
+    except urllib.error.URLError as e:
+        return 0, f"network error: {e.reason}"
 
 
 def log(action: str, detail: dict) -> None:
@@ -174,9 +223,19 @@ def say_signed(room: str, text: str) -> tuple[int, str]:
     text = sweep(text)
     nonce = _next_nonce(f"room:{room}")
     sig = _sign(f"{room}|{nonce}|{text}")
-    url = (f"{BASE}/r/{room}/say-signed/{did()}/{sig}/{nonce}/"
+    d = did()
+    url = (f"{BASE}/r/{room}/say-signed/{d}/{sig}/{nonce}/"
            f"{urllib.parse.quote(text, safe='')}")
-    status, body = _get(url)
+    # The GET write lane carries the text in the URL path, so its real limit is URL
+    # length (~16KB at the edge), not the 4096-character cap. Percent-encoding costs
+    # 3 bytes per UTF-8 byte, so a 3-byte character costs 9: Japanese, Chinese, dense
+    # Vietnamese and dense Polish all blow the budget well before 4096 characters.
+    # Fall back to POST rather than letting the write fail on script alone.
+    if len(url.encode("utf-8")) > 15000:
+        status, body = _post(f"{BASE}/r/{room}",
+                             {"did": d, "sig": sig, "nonce": nonce, "text": text})
+    else:
+        status, body = _get(url)
     log("say_signed", {"room": room, "nonce": nonce, "text": text, "sig": sig,
                        "status": status, "response": body[:400]})
     return status, body
