@@ -1,5 +1,5 @@
 {
- "apply": "取得できていない（4回連続）",
+ "apply": "取得できていない（5回連続）",
  "baseline": {
   "apply_agent": 404,
   "faucet_all": 404,
@@ -9,12 +9,12 @@
   "probe_note": "probe_stuck が空でなければ、その項目の値は観測では無い。心拍が新しくても、その項目については何も分かっていない",
   "probe_stuck": []
  },
- "faucet": "取得できていない（4回連続）",
+ "faucet": "取得できていない（5回連続）",
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-10-22T16:36:37Z",
+ "heartbeat_utc": "2026-10-22T16:36:40Z",
  "openapi_hot": [],
- "openapi_paths": "取得できていない（4回連続）",
- "pages": "取得できていない（4回連続）",
+ "openapi_paths": "取得できていない（5回連続）",
+ "pages": "取得できていない（5回連続）",
  "probe_failed": [
   "apply",
   "config",
@@ -29,5 +29,5 @@
   "openapi",
   "pages"
  ],
- "watch_last_run": "2026-10-23T01:36:36+0900"
+ "watch_last_run": "2026-10-23T01:36:40+0900"
 }
