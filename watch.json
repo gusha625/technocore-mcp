@@ -1,10 +1,5 @@
 {
- "apply": {
-  "agent": 404,
-  "kol": 200,
-  "miner": 200,
-  "validator": 200
- },
+ "apply": "取得できていない（4回連続）",
  "baseline": {
   "apply_agent": 404,
   "faucet_all": 404,
@@ -14,35 +9,12 @@
   "probe_note": "probe_stuck が空でなければ、その項目の値は観測では無い。心拍が新しくても、その項目については何も分かっていない",
   "probe_stuck": []
  },
- "faucet": {
-  "/apply/agent": 404,
-  "/faucet/": 404,
-  "/testnet/faucet/": 404
- },
+ "faucet": "取得できていない（4回連続）",
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-10-22T16:36:34Z",
+ "heartbeat_utc": "2026-10-22T16:36:37Z",
  "openapi_hot": [],
- "openapi_paths": 28,
- "pages": {
-  "airdrop": {
-   "http": 200,
-   "opens": null,
-   "status": "Draft",
-   "updated": "2026-10-05"
-  },
-  "testnet": {
-   "http": 200,
-   "opens": "Q4 2026",
-   "status": "Draft",
-   "updated": "2026-10-05"
-  },
-  "whitepaper": {
-   "http": 200,
-   "opens": null,
-   "status": null,
-   "updated": "2026-10-05"
-  }
- },
+ "openapi_paths": "取得できていない（4回連続）",
+ "pages": "取得できていない（4回連続）",
  "probe_failed": [
   "apply",
   "config",
@@ -50,6 +22,12 @@
   "openapi",
   "pages"
  ],
- "probe_stuck": [],
- "watch_last_run": "2026-10-23T01:36:34+0900"
+ "probe_stuck": [
+  "apply",
+  "config",
+  "faucet",
+  "openapi",
+  "pages"
+ ],
+ "watch_last_run": "2026-10-23T01:36:36+0900"
 }
