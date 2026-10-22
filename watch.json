@@ -9,7 +9,7 @@
   "apply_agent": 404,
   "faucet_all": 404,
   "note": "この基準値と違っていたら動いた",
-  "openapi_paths": 29,
+  "openapi_paths": 28,
   "pages_updated": "2026-10-05"
  },
  "faucet": {
@@ -18,7 +18,7 @@
   "/testnet/faucet/": 404
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-10-22T12:50:26Z",
+ "heartbeat_utc": "2026-10-22T12:52:06Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -41,5 +41,5 @@
    "updated": "2026-10-05"
   }
  },
- "watch_last_run": "2026-10-22T21:49:04+0900"
+ "watch_last_run": "2026-10-22T21:52:06+0900"
 }
