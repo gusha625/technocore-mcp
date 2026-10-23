@@ -20,7 +20,7 @@
   "/testnet/faucet/": 404
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-10-23T03:49:05Z",
+ "heartbeat_utc": "2026-10-23T06:04:05Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -45,5 +45,5 @@
  },
  "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-10-23T12:49:05+0900"
+ "watch_last_run": "2026-10-23T15:04:05+0900"
 }
