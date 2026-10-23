@@ -34,4 +34,5 @@ Format:
 
 ```
 2026-10-22T11:17:03Z | did:key:z6MkqKLzbrePKqUeW2UFUB691Seg2xXsdBQmmw84N31VLNR7 | activity-ledger rows=3538 sha256=4e846c67d3b7cecfc23d30a17a586a339fc9810c7ef4d6254a0382dcc52bc65f span=2026-08-26..2026-10-22 | contrib-chain head=dae1dd3e6055bd8fe41e78360d206b7da4d723d160e9fe20498f6a590d0d5a17 rows=32
+2026-10-23T17:45:15Z | did:key:z6MkqKLzbrePKqUeW2UFUB691Seg2xXsdBQmmw84N31VLNR7 | activity-ledger rows=3539 sha256=5125eef4b8523851b122adfaa9476d2b5bfc05d411a0f9d1d812d5c3a5ed8928 span=2026-08-26..2026-10-24 | contrib-chain head=15cedc0d401b0457ec6f38d068ce875548c8aeda81eb7b747c71df5506b27616 rows=33
 ```
