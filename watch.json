@@ -35,15 +35,15 @@
   "verified_cap_flop": 2000
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-11-03T12:49:05Z",
+ "heartbeat_utc": "2026-11-03T13:04:37Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
   "airdrop": {
-   "http": 200,
+   "http": null,
    "opens": null,
-   "status": "Draft",
-   "updated": "2026-10-05"
+   "status": null,
+   "updated": null
   },
   "testnet": {
    "http": 200,
@@ -60,5 +60,5 @@
  },
  "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-11-03T21:49:05+0900"
+ "watch_last_run": "2026-11-03T22:04:37+0900"
 }
