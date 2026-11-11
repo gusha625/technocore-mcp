@@ -35,7 +35,7 @@
   "verified_cap_flop": 2000
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-11-11T15:04:24Z",
+ "heartbeat_utc": "2026-11-11T15:19:16Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -58,9 +58,7 @@
    "updated": "2026-10-05"
   }
  },
- "probe_failed": [
-  "faucet_host"
- ],
+ "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-11-12T00:04:24+0900"
+ "watch_last_run": "2026-11-12T00:19:16+0900"
 }
