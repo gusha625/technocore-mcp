@@ -34,7 +34,7 @@
   "genesis": "0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800",
   "min_balance_flop": 5000.0,
   "network": "testnet",
-  "pending_grants": 2786,
+  "pending_grants": 7182,
   "quick_flop": 25,
   "rpc": "wss://testnet.flop.network",
   "sponsor_miner_status": "open",
@@ -44,7 +44,7 @@
   "verified_cap_flop": 2000
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-11-25T09:11:44Z",
+ "heartbeat_utc": "2026-11-25T09:19:05Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -69,5 +69,5 @@
  },
  "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-11-25T18:11:44+0900"
+ "watch_last_run": "2026-11-25T18:19:05+0900"
 }
