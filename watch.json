@@ -26,14 +26,12 @@
   "/testnet/faucet/": 404
  },
  "faucet_host": {
-  "address_cooldown_h": 24.0,
-  "daily_cap_flop": 10000000,
   "genesis": "0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800",
   "network": "testnet",
   "rpc": "wss://testnet.flop.network"
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-11-25T06:34:13Z",
+ "heartbeat_utc": "2026-11-25T06:49:04Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -56,9 +54,7 @@
    "updated": "2026-10-05"
   }
  },
- "probe_failed": [
-  "faucet_host"
- ],
+ "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-11-25T15:34:13+0900"
+ "watch_last_run": "2026-11-25T15:49:04+0900"
 }
