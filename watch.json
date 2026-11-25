@@ -26,10 +26,8 @@
   "/testnet/faucet/": 404
  },
  "faucet_host": {
-  "address_cooldown_h": 24.0,
   "agent_claim_path": "/v1/testnet/agent-claims",
   "agent_grant_flop": 10,
-  "daily_cap_flop": 10000000,
   "genesis": "0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800",
   "network": "testnet",
   "quick_flop": 25,
@@ -38,7 +36,7 @@
   "verified_cap_flop": 2000
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-11-25T07:17:29Z",
+ "heartbeat_utc": "2026-11-25T08:34:18Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -63,5 +61,5 @@
  },
  "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-11-25T16:17:29+0900"
+ "watch_last_run": "2026-11-25T17:34:18+0900"
 }
