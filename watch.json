@@ -29,12 +29,12 @@
   "address_cooldown_h": 24.0,
   "agent_claim_path": "/v1/testnet/agent-claims",
   "agent_grant_flop": 10,
-  "balance_flop": 83460478.0,
+  "balance_flop": 83184461.0,
   "daily_cap_flop": 11000000,
   "genesis": "0x918abd58fb16306b30ef3886514cfaebffecb4de43e82b6f8ec4795c43cfd800",
   "min_balance_flop": 5000.0,
   "network": "testnet",
-  "pending_grants": 3000,
+  "pending_grants": 2883,
   "quick_flop": 25,
   "rpc": "wss://testnet.flop.network",
   "sponsor_miner_status": "automatic_full",
@@ -44,7 +44,7 @@
   "verified_cap_flop": 2000
  },
  "heartbeat_note": "この時刻より数時間以上古ければ、見張りの機械が止まっている。それ自体が報せ",
- "heartbeat_utc": "2026-11-27T21:19:09Z",
+ "heartbeat_utc": "2026-11-27T21:34:11Z",
  "openapi_hot": [],
  "openapi_paths": 28,
  "pages": {
@@ -69,5 +69,5 @@
  },
  "probe_failed": [],
  "probe_stuck": [],
- "watch_last_run": "2026-11-28T06:19:09+0900"
+ "watch_last_run": "2026-11-28T06:34:11+0900"
 }
